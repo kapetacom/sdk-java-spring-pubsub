@@ -47,8 +47,13 @@ public class KapetaPubSubSubscriptionManager<T> {
 
     private Optional<PubSubProviderConsumer> getProvider() {
         try {
+            var providerResourceName = kapetaConfigurationProvider.getInstanceForConsumer(resourceName).getConnections().stream()
+                    .filter(connection -> connection.getConsumer().getResourceName().equals(resourceName))
+                    .map(connection -> connection.getProvider().getResourceName())
+                    .findFirst().orElseThrow();
+
             return kapetaConfigurationProvider.getInstanceForConsumer(resourceName, PubSubBlockDefinition.class).getBlock().getSpec().getProviders().stream()
-                    .filter(p -> p.getMetadata().getName().equals(resourceName))
+                    .filter(p -> p.getMetadata().getName().equals(providerResourceName))
                     .findAny();
         } catch (IOException e) {
             throw new RuntimeException(e);
