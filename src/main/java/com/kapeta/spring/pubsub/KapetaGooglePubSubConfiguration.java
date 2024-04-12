@@ -9,7 +9,6 @@ import com.google.cloud.spring.pubsub.PubSubAdmin;
 import com.google.cloud.spring.pubsub.core.PubSubTemplate;
 import com.google.cloud.spring.pubsub.support.converter.JacksonPubSubMessageConverter;
 import com.google.cloud.spring.pubsub.support.converter.PubSubMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationListener;
@@ -24,7 +23,7 @@ public class KapetaGooglePubSubConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(PubSubMessageConverter.class)
-    public PubSubMessageConverter pubSubMessageConverter(@Autowired ObjectMapper objectMapper) {
+    public PubSubMessageConverter pubSubMessageConverter(ObjectMapper objectMapper) {
         return new JacksonPubSubMessageConverter(objectMapper);
     }
 
