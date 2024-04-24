@@ -11,6 +11,7 @@ import com.google.cloud.spring.pubsub.support.converter.JacksonPubSubMessageConv
 import com.google.cloud.spring.pubsub.support.converter.PubSubMessageConverter;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import java.util.Collection;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.cloud.gcp.pubsub.enabled", havingValue = "true", matchIfMissing = true)
 public class KapetaGooglePubSubConfiguration {
 
     @Bean
