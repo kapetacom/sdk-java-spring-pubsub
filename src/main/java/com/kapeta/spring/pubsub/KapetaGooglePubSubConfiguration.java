@@ -50,8 +50,9 @@ public class KapetaGooglePubSubConfiguration {
         public void onApplicationEvent(ContextRefreshedEvent event) {
             //noinspection rawtypes
             Collection<KapetaPubSubPublisherTemplate> publishers = event.getApplicationContext().getBeansOfType(KapetaPubSubPublisherTemplate.class).values();
-            publishers.forEach(kapetaPubSubPublisherTemplate ->
-                    ensureTopic(pubSubAdmin, kapetaPubSubPublisherTemplate.getTopic()));
+            for (KapetaPubSubPublisherTemplate<?> publisher : publishers) {
+                publisher.getTopics().forEach(topic -> ensureTopic(pubSubAdmin, topic));
+            }
 
             //noinspection rawtypes
             Collection<KapetaPubSubSubscriptionManager> subscriptions = event.getApplicationContext().getBeansOfType(KapetaPubSubSubscriptionManager.class).values();
